@@ -11,11 +11,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
-/**
- * @author omerakkus
- * @since 07/28/2022
- */
-
 @Module
 @InstallIn(SingletonComponent::class)
 object UserRepoModule {
@@ -33,6 +28,6 @@ object UserRepoModule {
     @Provides
     @Singleton
     fun provideUserRepository(api: RepoService): RepoRepository {
-        return RepoRepositoryImpl(api= api)
+        return RepoRepositoryImpl(api = api)
     }
 }

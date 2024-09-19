@@ -2,7 +2,7 @@ package com.github.repos.domain.usecase
 
 import com.github.repos.domain.model.AllRepos
 import com.github.repos.domain.repository.RepoRepository
-import com.github.repos.domain.util.ResponseState
+import com.github.repos.domain.model.ResponseState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException

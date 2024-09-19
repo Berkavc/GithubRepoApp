@@ -2,11 +2,6 @@ package com.github.repos.data.dto.allReposDto
 
 import com.github.repos.domain.model.AllRepos
 
-/**
- * @author omerakkus
- * @since 07/28/2022
- */
-
 data class AllRepositoriesDtoItem(
     val archive_url: String,
     val assignees_url: String,
@@ -54,10 +49,8 @@ data class AllRepositoriesDtoItem(
     val teams_url: String,
     val trees_url: String,
     val url: String
-)
-
-{
-    fun toAllRepos(): AllRepos{
+) {
+    fun toAllRepos(): AllRepos {
         return AllRepos(
             repoName = name,
             ownerName = owner.login,

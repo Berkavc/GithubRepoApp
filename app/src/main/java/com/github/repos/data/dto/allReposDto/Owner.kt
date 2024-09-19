@@ -1,10 +1,5 @@
 package com.github.repos.data.dto.allReposDto
 
-/**
- * @author omerakkus
- * @since 07/28/2022
- */
-
 data class Owner(
     val avatar_url: String,
     val events_url: String,

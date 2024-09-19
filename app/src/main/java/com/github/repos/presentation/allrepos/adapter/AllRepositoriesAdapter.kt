@@ -10,32 +10,30 @@ import com.github.repos.databinding.ItemRepoBinding
 import com.github.repos.domain.model.AllRepos
 import kotlinx.android.synthetic.main.item_repo.view.*
 
-/**
- * @author omerakkus
- * @since 07/29/2022
- */
-
-class AllRepositoriesAdapter(private val listener: ItemClickListener, private val allRepoList:List<AllRepos>):
-RecyclerView.Adapter<AllRepositoriesAdapter.AllReposViewHolder>() {
+class AllRepositoriesAdapter(
+    private val listener: ItemClickListener,
+    private val allRepoList: List<AllRepos>
+) :
+    RecyclerView.Adapter<AllRepositoriesAdapter.AllReposViewHolder>() {
 
     private lateinit var binding: ItemRepoBinding
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): AllRepositoriesAdapter.AllReposViewHolder {
+    ): AllReposViewHolder {
         binding = ItemRepoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return AllRepositoriesAdapter.AllReposViewHolder(binding)
+        return AllReposViewHolder(binding)
     }
 
     override fun onBindViewHolder(
-        holder: AllRepositoriesAdapter.AllReposViewHolder,
+        holder: AllReposViewHolder,
         position: Int
     ) {
         val reposList = allRepoList[position]
         holder.bind(reposList)
         holder.itemView.setOnClickListener {
-            listener.onClick(reposList.ownerName,reposList.repoName)
+            listener.onClick(reposList.ownerName, reposList.repoName)
         }
     }
 
@@ -54,6 +52,6 @@ RecyclerView.Adapter<AllRepositoriesAdapter.AllReposViewHolder>() {
     }
 
     interface ItemClickListener {
-        fun onClick(username: String, repoName:String)
+        fun onClick(username: String, repoName: String)
     }
 }

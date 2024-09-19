@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.repos.R
 import com.github.repos.domain.model.AllRepos
 import com.github.repos.domain.util.ReposItemDecoration
-import com.github.repos.domain.util.ResponseState
+import com.github.repos.domain.model.ResponseState
 import com.github.repos.presentation.allrepos.adapter.AllRepositoriesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_repos.*
@@ -47,9 +47,7 @@ class FragmentRepos : Fragment() {
 
         allRepoListViewModel.allRepositories.observe(viewLifecycleOwner){
             when(it){
-                is ResponseState.Loading ->{
-
-                }
+                is ResponseState.Loading ->{}
                 is ResponseState.Success ->{
                     allRepoList = it.data
                     recyclerAllRepos.addItemDecoration(
