@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/fragmentRepos">
+    app:startDestination="@id/AllRepositoriesFragment">
     <fragment
-        android:id="@+id/fragmentRepos"
-        android:name="com.github.repos.presentation.allrepos.FragmentRepos"
-        android:label="fragment_repos"
-        tools:layout="@layout/fragment_repos" >
+        android:id="@+id/AllRepositoriesFragment"
+        android:name="com.github.repos.presentation.allrepos.AllRepositoriesFragment"
+        android:label="fragment_all_repositories"
+        tools:layout="@layout/fragment_all_repositories" >
         <action
             android:id="@+id/action_fragmentRepos_to_repositoryDetailFragment"
             app:destination="@id/repositoryDetailFragment" />
@@ -20,6 +20,6 @@
         tools:layout="@layout/fragment_repository_detail" >
         <action
             android:id="@+id/action_repositoryDetailFragment_to_fragmentRepos"
-            app:destination="@id/fragmentRepos" />
+            app:destination="@id/AllRepositoriesFragment" />
     </fragment>
 </navigation>

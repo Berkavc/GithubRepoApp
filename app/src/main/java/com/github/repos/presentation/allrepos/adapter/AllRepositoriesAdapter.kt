@@ -2,27 +2,24 @@ package com.github.repos.presentation.allrepos.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.github.repos.BR
-import com.github.repos.databinding.ItemRepoBinding
-import com.github.repos.domain.model.AllRepos
-import kotlinx.android.synthetic.main.item_repo.view.*
+import com.github.repos.databinding.ItemRepositoriesBinding
+import com.github.repos.domain.model.AllRepositories
 
 class AllRepositoriesAdapter(
     private val listener: ItemClickListener,
-    private val allRepoList: List<AllRepos>
-) :
-    RecyclerView.Adapter<AllRepositoriesAdapter.AllReposViewHolder>() {
+    private val allRepoList: List<AllRepositories>
+) : RecyclerView.Adapter<AllRepositoriesAdapter.AllReposViewHolder>() {
 
-    private lateinit var binding: ItemRepoBinding
+    private lateinit var binding: ItemRepositoriesBinding
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): AllReposViewHolder {
-        binding = ItemRepoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        binding = ItemRepositoriesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return AllReposViewHolder(binding)
     }
 
@@ -33,16 +30,18 @@ class AllRepositoriesAdapter(
         val reposList = allRepoList[position]
         holder.bind(reposList)
         holder.itemView.setOnClickListener {
-            listener.onClick(reposList.ownerName, reposList.repoName)
+            listener.onClick(reposList.owner.login, reposList.name)
         }
     }
 
     class AllReposViewHolder(
-        private val binding: ViewDataBinding
+        private val binding: ItemRepositoriesBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(allRepos: AllRepos) {
-            binding.setVariable(BR.allRepos, allRepos)
-            Glide.with(itemView.context).load(allRepos.avatarUrl).into(itemView.ivAvatar)
+        fun bind(allRepositories: AllRepositories) {
+            binding.setVariable(BR.allRepos, allRepositories)
+            Glide.with(itemView.context)
+                .load(allRepositories.owner.avatarUrl)
+                .into(binding.ivAvatar)
             binding.executePendingBindings()
         }
     }

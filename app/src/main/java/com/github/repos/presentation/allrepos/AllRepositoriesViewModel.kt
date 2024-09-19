@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.github.repos.domain.model.AllRepos
+import com.github.repos.domain.model.AllRepositories
 import com.github.repos.domain.usecase.GetAllRepositoriesUseCase
 import com.github.repos.domain.model.ResponseState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,8 +15,8 @@ import javax.inject.Inject
 class AllRepositoriesViewModel @Inject constructor(val allRepositoriesUseCase: GetAllRepositoriesUseCase)
     :ViewModel(){
 
-    private val _allRepositories = MutableLiveData<ResponseState<List<AllRepos>>>()
-    val allRepositories: LiveData<ResponseState<List<AllRepos>>>
+    private val _allRepositories = MutableLiveData<ResponseState<List<AllRepositories>>>()
+    val allRepositories: LiveData<ResponseState<List<AllRepositories>>>
         get() = _allRepositories
 
 

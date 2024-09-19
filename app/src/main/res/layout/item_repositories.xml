@@ -6,7 +6,7 @@
     <data>
         <variable
             name="allRepos"
-            type="com.github.repos.domain.model.AllRepos" />
+            type="com.github.repos.domain.model.AllRepositories" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,7 +44,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
             tools:ignore="UnusedAttribute"
-            tools:text="@{allRepos.repoName}" />
+            tools:text="@{allRepos.name}" />
 
         <TextView
             android:id="@+id/tvOwnerName"
@@ -55,9 +55,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tvRepoName"
             app:layout_constraintTop_toBottomOf="@+id/tvRepoName"
-            tools:text="@{allRepos.ownerName}"/>
-
-
-
+            tools:text="@{allRepos.owner.login}"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

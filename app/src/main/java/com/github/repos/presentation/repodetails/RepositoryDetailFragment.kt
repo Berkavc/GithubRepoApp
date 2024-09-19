@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.github.repos.BR
 import com.github.repos.R
 import com.github.repos.databinding.FragmentRepositoryDetailBinding
-import com.github.repos.domain.model.RepoDetails
+import com.github.repos.domain.model.RepositoryDetails
 import com.github.repos.domain.model.ResponseState
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class RepositoryDetailFragment : Fragment() {
     private var username = ""
     private var repoName = ""
-    private lateinit var repoDetails: RepoDetails
+    private lateinit var repositoryDetails: RepositoryDetails
     private lateinit var binding: FragmentRepositoryDetailBinding
     private val repoDetailsViewModel: RepositoryDetailsViewModel by viewModels()
 
@@ -51,10 +51,12 @@ class RepositoryDetailFragment : Fragment() {
                 }
 
                 is ResponseState.Success -> {
-                    repoDetails = it.data!!
-                    binding.setVariable(BR.repoDetails, repoDetails)
+                    repositoryDetails = it.data!!
+                    binding.setVariable(BR.repoDetails, repositoryDetails)
                     binding.executePendingBindings()
-                    Glide.with(requireContext()).load(repoDetails.avatar).into(binding.ivRepoDetail)
+                    Glide.with(requireContext())
+                        .load(repositoryDetails.owner.avatarUrl)
+                        .into(binding.ivRepoDetail)
                     binding.ivRepoDetail.setOnClickListener {}
                 }
 
