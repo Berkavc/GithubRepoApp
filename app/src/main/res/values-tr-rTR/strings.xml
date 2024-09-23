@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GithubReposApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Merhaba boş bölüm</string>
+    <string name="repositories">Depolar</string>
+    <string name="repository_detail">Depo Detayı</string>
+    <string name="user_detail">Kullanıcı DEtayı</string>
+    <string name="repo_name">Repo Adı</string>
+    <string name="owner">Sahibi</string>
+    <string name="forks_count">Çatal Sayısı</string>
+    <string name="language">Dil</string>
+    <string name="default_branch">Varsayılan Şube Adı</string>
+    <string name="connection_error">Beklenmedik bir hata. Lütfen daha sonra tekrar deneyin.</string>
+</resources>
