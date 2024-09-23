@@ -12,9 +12,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
@@ -116,11 +118,10 @@ fun RepoDetailScreen(
     onBackPressed: () -> Unit
 ) {
     val repositoryDetails by viewModel.repositoryDetails.observeAsState()
+    LaunchedEffect(Unit) {
+        viewModel.getRepositoryDetails(username, repoName)
+    }
     Column(modifier = Modifier.fillMaxWidth()) {
-
-        LaunchedEffect(Unit) {
-            viewModel.getRepositoryDetails(username, repoName)
-        }
         TopAppBar(
             colors = TopAppBarDefaults.topAppBarColors(
                 containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -145,8 +146,12 @@ fun RepoDetailScreen(
         )
 
         when (val state = repositoryDetails) {
-            null, is ResponseState.Loading -> {
-                CircularProgressIndicator()
+            is ResponseState.Loading -> {
+                CircularProgressIndicator(
+                    Modifier
+                        .fillMaxSize()
+                        .wrapContentSize(Alignment.Center)
+                )
             }
 
             is ResponseState.Success -> {
@@ -242,6 +247,8 @@ fun RepoDetailScreen(
                     Toast.LENGTH_SHORT
                 ).show()
             }
+
+            else -> {}
         }
     }
 }
