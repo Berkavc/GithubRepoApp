@@ -10,4 +10,7 @@
     <string name="language">Language</string>
     <string name="default_branch">Default Branch Name</string>
     <string name="connection_error">An unexpected error. Please try again later.</string>
+    <string name="summary">Summary</string>
+    <string name="all_repositories">All Repositories</string>
+    <string name="repository_details">Repository Details</string>
 </resources>

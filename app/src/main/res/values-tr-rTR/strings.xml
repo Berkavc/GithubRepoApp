@@ -11,4 +11,7 @@
     <string name="language">Dil</string>
     <string name="default_branch">Varsayılan Şube Adı</string>
     <string name="connection_error">Beklenmedik bir hata. Lütfen daha sonra tekrar deneyin.</string>
+    <string name="summary">Summary</string>
+    <string name="all_repositories">All Repositories</string>
+    <string name="repository_details">Repository Details</string>
 </resources>
