@@ -44,7 +44,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.bumptech.glide.Glide
 import com.github.repos.R
-import com.github.repos.domain.model.ResponseState
+import com.github.repos.data.model.ResponseState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

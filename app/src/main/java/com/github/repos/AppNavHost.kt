@@ -7,7 +7,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.github.repos.domain.model.AllRepositories
+import com.github.repos.data.model.AllRepositories
 import com.github.repos.presentation.SummaryScreen
 
 @Composable

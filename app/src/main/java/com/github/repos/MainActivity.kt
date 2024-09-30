@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.github.repos.domain.model.AllRepositories
+import com.github.repos.data.model.AllRepositories
 import com.github.repos.presentation.SummaryScreen
 import com.github.repos.presentation.components.AppTopBar
 import com.github.repos.presentation.components.BottomNavigationBar

@@ -1,8 +1,8 @@
 package com.github.repos.data.repository
 
 import com.github.repos.data.framework.remote.RepoService
-import com.github.repos.domain.model.AllRepositories
-import com.github.repos.domain.model.RepositoryDetails
+import com.github.repos.data.model.AllRepositories
+import com.github.repos.data.model.RepositoryDetails
 import com.github.repos.domain.repository.RepoRepository
 import javax.inject.Inject
 

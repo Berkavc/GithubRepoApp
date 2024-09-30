@@ -1,7 +1,7 @@
 package com.github.repos.domain.usecase
 
-import com.github.repos.domain.model.RepositoryDetails
-import com.github.repos.domain.model.ResponseState
+import com.github.repos.data.model.RepositoryDetails
+import com.github.repos.data.model.ResponseState
 import com.github.repos.domain.repository.RepoRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

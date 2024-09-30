@@ -49,8 +49,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.github.repos.MainViewModel
 import com.github.repos.R
-import com.github.repos.domain.model.AllRepositories
-import com.github.repos.domain.model.ResponseState
+import com.github.repos.data.model.AllRepositories
+import com.github.repos.data.model.ResponseState
 import com.github.repos.presentation.repodetails.RepoDetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers

@@ -1,4 +1,4 @@
-package com.github.repos.domain.model
+package com.github.repos.data.model
 
 sealed class ResponseState<T>(val data: T? = null, val message: String? = null) {
     class Loading<T>(data: T? = null) : ResponseState<T>(data)
