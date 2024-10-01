@@ -47,10 +47,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.github.repos.MainViewModel
 import com.github.repos.R
-import com.github.repos.data.model.AllRepositories
-import com.github.repos.data.model.ResponseState
+import com.github.repos.domain.model.AllRepositories
+import com.github.repos.domain.model.ResponseState
+import com.github.repos.navigateDetails
 import com.github.repos.presentation.repodetails.RepoDetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -60,32 +63,14 @@ import java.net.URL
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AllRepositoriesScreen(
-    navController: NavController,
-//    viewModel: MainViewModel = hiltViewModel()
+    navController: NavHostController = rememberNavController(),
+    viewModel: MainViewModel = hiltViewModel()
 ) {
-    val viewModel = hiltViewModel<MainViewModel>()
+//    val viewModel = hiltViewModel<MainViewModel>()
     val context = LocalContext.current
     val allRepositories by viewModel.allRepositories.observeAsState()
+
     Column {
-        Row {
-            TopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                    titleContentColor = Color.Black,
-                ),
-                title = {
-                    Text(
-                        stringResource(id = R.string.repositories),
-                        maxLines = 1,
-                        textAlign = TextAlign.Start,
-                        color = Color.White,
-                        fontSize = 20.sp,
-                        overflow = TextOverflow.Ellipsis,
-                        fontWeight = FontWeight.Bold,
-                    )
-                }
-            )
-        }
         when (val state = allRepositories) {
             is ResponseState.Loading -> {
                 CircularProgressIndicator(
@@ -100,12 +85,8 @@ fun AllRepositoriesScreen(
                 LazyColumn(modifier = Modifier.fillMaxWidth()) {
                     items(repoList!!.size) { index ->
                         RepoItemView(repo = repoList[index]) { username, repoName, avatarUrl ->
-                            val intent = Intent(context, RepoDetailActivity::class.java).apply {
-                                putExtra("user_name", repoList[index].owner.login)
-                                putExtra("repo_name", repoList[index].name)
-                                putExtra("avatar_url", repoList[index].owner.avatarUrl)
-                            }
-                            context.startActivity(intent)
+                            // Navigate to the repository details
+                            navController.navigateDetails(username, repoName, avatarUrl)
                         }
                     }
                 }
@@ -162,8 +143,8 @@ suspend fun loadImage(url: String): Bitmap? {
 fun RepoItemView(repo: AllRepositories, onClick: (String, String, String) -> Unit) {
     Column(modifier = Modifier.clickable {
         onClick(
-            repo.name,
             repo.owner.login,
+            repo.name,
             repo.owner.avatarUrl
         )
     }) {

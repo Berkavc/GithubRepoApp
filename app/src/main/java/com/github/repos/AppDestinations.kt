@@ -1,12 +1,15 @@
 package com.github.repos
 
-import com.github.repos.data.model.AllRepositories
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 
 sealed interface AppDestination {
     val route : String
     val title: Int
     val icon: Int
 }
+
 object Summary : AppDestination {
     override val route: String = "summary"
     override val title = R.string.summary
@@ -19,22 +22,26 @@ object AllRepos : AppDestination {
 }
 
 
-//data object SingleRepository : AppDestination { /*todo */
-//    // Added for simplicity, this icon will not in fact be used, as SingleAccount isn't
-//    // part of the RallyTabRow selection
-//    override val icon: Int? = null
-//    override val route = "single_reporistory"
-//    override val title: Int
-//        get() = TODO("Not yet implemented")
-//    const val accountTypeArg = "account_type"
-//    val routeWithArgs = "$route/{$accountTypeArg}"
-//    val arguments = listOf(
-//        navArgument(accountTypeArg) { type = NavType.StringType }
-//    )
-//    val deepLinks = listOf(
-//        navDeepLink { uriPattern = "rally://$route/{$accountTypeArg}" }
-//    )
-//}
+object SingleRepo : AppDestination {
+    override val route = "single_repository"
+    override val icon = R.drawable.ic_launcher_background
+    override val title = R.string.repository_detail
+    const val userNameArg = "user_name"
+    const val repoNameArg = "repo_name"
+    const val avatarUrlArg = "avatar_url"
+    // Define the dynamic route with placeholders
+    val routeWithArgs = "$route/{$userNameArg}/{$repoNameArg}/{$avatarUrlArg}"
+
+    // Define arguments to be passed via the route
+    val arguments = listOf(
+        navArgument(userNameArg) { type = NavType.StringType },
+        navArgument(repoNameArg) { type = NavType.StringType },
+        navArgument(avatarUrlArg) { type = NavType.StringType }
+    )
+    val deepLinks = listOf(
+        navDeepLink { uriPattern = "android-app://androidx.navigation/$route/{$userNameArg}/{$repoNameArg}/{$avatarUrlArg}" }
+    )
+}
 
 val allDestinations = listOf(Summary, AllRepos)
 

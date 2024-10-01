@@ -1,23 +1,31 @@
 package com.github.repos
 
 import AllRepositoriesScreen
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.github.repos.data.model.AllRepositories
+import androidx.navigation.navArgument
+import com.github.repos.SingleRepo.arguments
+import com.github.repos.SingleRepo.avatarUrlArg
+import com.github.repos.SingleRepo.repoNameArg
+import com.github.repos.SingleRepo.userNameArg
+import com.github.repos.presentation.RepositoryDetailsScreen
 import com.github.repos.presentation.SummaryScreen
 
 @Composable
 fun AppNavHost(
     navController: NavHostController,
+    startDestination: String = Summary.route,
     modifier: Modifier = Modifier
 ) {
     NavHost(
         navController = navController,
-        startDestination = Summary.route,
+        startDestination =  startDestination,
         modifier = modifier
     ) {
         composable(route = Summary.route) {
@@ -25,28 +33,35 @@ fun AppNavHost(
         }
         composable(route = AllRepos.route) {
             AllRepositoriesScreen(navController)
-//            SummaryScreen(navController)
-
         }
-//        composable(
-//            route = SingleRepository.routeWithArgs,
-//            arguments = SingleRepository.arguments,
-//            deepLinks = SingleRepository.deepLinks
-//        ) { navBackStackEntry ->
-//            val accountType =
-//                navBackStackEntry.arguments?.getString(SingleRepository.accountTypeArg)
-//            RepositoryDetailsScreen() /*todo*/
-//        }
+        composable(
+            route = SingleRepo.routeWithArgs,
+            arguments = arguments,
+//            deepLinks = SingleRepo.deepLinks
+        ) { navBackStackEntry ->
+            val repoName =
+                navBackStackEntry.arguments?.getString(repoNameArg)
+            val userName =
+                navBackStackEntry.arguments?.getString(userNameArg)
+            val avatarUrl =
+                navBackStackEntry.arguments?.getString(avatarUrlArg)
+            if (repoName != null && userName != null && avatarUrl != null) {
+                RepositoryDetailsScreen(navController, userName, repoName, avatarUrl)
+            } else {
+                Text("Error: Missing required arguments")
+            }
+        }
     }
 }
 
-fun NavHostController.navigateSingleTopTo(route: String) =
+fun NavHostController.navigateWithStackControl(route: String) =
     this.navigate(route) {
+        println("navigateWithStackControl===${route}")
         // Pop up to the start destination of the graph to
         // avoid building up a large stack of destinations
         // on the back stack as users select items
         popUpTo(
-            this@navigateSingleTopTo.graph.findStartDestination().id
+            this@navigateWithStackControl.graph.findStartDestination().id
         ) {
             saveState = true
         }
@@ -56,3 +71,19 @@ fun NavHostController.navigateSingleTopTo(route: String) =
         // Restore state when reselecting a previously selected item
         restoreState = true
     }
+fun NavHostController.navigateAndClearBackStack(route: String) =
+    this.navigate(route) {
+        // Pop up to the root of the backstack and clear everything
+        popUpTo(0) {
+            inclusive = true // Clears the backstack entirely
+        }
+        // Avoid multiple copies of the same destination when
+        // reselecting the same item
+        launchSingleTop = true
+    }
+
+fun NavHostController.navigateDetails(userName: String, repoName: String, avatarUrl: String) {
+    println("navigateDetails===${SingleRepo.route}/${userName}/${repoName}/${avatarUrl}")
+    this.navigateWithStackControl("${SingleRepo.route}/${userName}/${repoName}/${avatarUrl}")
+}
+//    this.navigateWithStackControl("${SingleRepo.route}/${userName}/${repoName}/${avatarUrl}")
