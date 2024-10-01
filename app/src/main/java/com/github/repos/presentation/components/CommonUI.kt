@@ -117,19 +117,6 @@ fun NavigationDrawer(
         },
     ) {
         Scaffold(
-            floatingActionButton = {
-                ExtendedFloatingActionButton(
-                    text = { Text("Show drawer") },
-                    icon = { Icon(Icons.Filled.Add, contentDescription = "") },
-                    onClick = {
-                        scope.launch {
-                            drawerState.apply {
-                                if (isClosed) open() else close()
-                            }
-                        }
-                    }
-                )
-            }
         ) { contentPadding ->
             Surface(Modifier.padding(contentPadding)) {
                 content()

@@ -38,4 +38,4 @@ object SingleRepo : AppDestination {
 
 val allDestinations = listOf(Summary, AllRepos, SingleRepo)
 
-val bottomNavDestinations = listOf(Summary, AllRepos, SingleRepo)
+val bottomNavDestinations = listOf(Summary, AllRepos)
