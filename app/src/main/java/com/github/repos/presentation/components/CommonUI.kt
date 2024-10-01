@@ -32,11 +32,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
 import com.bumptech.glide.Glide
+import com.github.repos.presentation.extensions.toPx
 import com.github.repos.presentation.navigation.AppDestination
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -130,12 +130,4 @@ fun LoadImageFromUrl(url: String) {
             .override(32.dp.toPx(imageView.context), 32.dp.toPx(imageView.context))
             .into(imageView)
     })
-}
-
-fun Dp.toPx(context: Context): Int {
-    return TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_DIP,
-        this.value,
-        context.resources.displayMetrics
-    ).toInt()
 }
