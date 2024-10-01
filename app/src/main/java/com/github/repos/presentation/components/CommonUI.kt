@@ -1,24 +1,22 @@
 package com.github.repos.presentation.components
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import androidx.compose.foundation.Image
+import android.content.Context
+import android.util.TypedValue
+import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -30,22 +28,16 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
-import com.github.repos.AppDestination
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.net.URL
+import com.bumptech.glide.Glide
+import com.github.repos.presentation.navigation.AppDestination
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -127,29 +119,23 @@ fun NavigationDrawer(
 
 @Composable
 fun LoadImageFromUrl(url: String) {
-    var bitmap by remember { mutableStateOf<Bitmap?>(null) }
-
-    LaunchedEffect(url) {
-        bitmap = loadImage(url)
-    }
-
-    bitmap?.let {
-        Image(
-            bitmap = it.asImageBitmap(), contentDescription = "Avatar",
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(0.5f)
-        )
-    }
+    AndroidView(factory = { context ->
+        ImageView(context).apply {
+            layoutParams = ViewGroup.LayoutParams(32.dp.toPx(context), 32.dp.toPx(context))
+            scaleType = ImageView.ScaleType.CENTER_CROP
+        }
+    }, update = { imageView ->
+        Glide.with(imageView.context)
+            .load(url)
+            .override(32.dp.toPx(imageView.context), 32.dp.toPx(imageView.context))
+            .into(imageView)
+    })
 }
 
-suspend fun loadImage(url: String): Bitmap? {
-    return withContext(Dispatchers.IO) {
-        try {
-            val inputStream = URL(url).openStream()
-            BitmapFactory.decodeStream(inputStream)
-        } catch (e: Exception) {
-            null
-        }
-    }
+fun Dp.toPx(context: Context): Int {
+    return TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP,
+        this.value,
+        context.resources.displayMetrics
+    ).toInt()
 }

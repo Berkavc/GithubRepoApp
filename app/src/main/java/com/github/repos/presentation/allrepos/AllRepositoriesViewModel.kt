@@ -11,17 +11,19 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 @HiltViewModel
-class AllRepositoriesViewModel @Inject constructor(val allRepositoriesUseCase: GetAllRepositoriesUseCase)
-    :ViewModel(){
+class AllRepositoriesViewModel @Inject constructor(
+    val allRepositoriesUseCase: GetAllRepositoriesUseCase
+) : ViewModel() {
 
     private val _allRepositories = MutableLiveData<ResponseState<List<AllRepositories>>>()
     val allRepositories: LiveData<ResponseState<List<AllRepositories>>>
         get() = _allRepositories
 
 
-    fun getAllRepositories() =viewModelScope.launch(Dispatchers.IO) {
-        allRepositoriesUseCase().collect{
+    fun getAllRepositories() = viewModelScope.launch(Dispatchers.IO) {
+        allRepositoriesUseCase().collect {
             _allRepositories.postValue(it)
         }
     }

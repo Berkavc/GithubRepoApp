@@ -1,10 +1,11 @@
-package com.github.repos
+package com.github.repos.presentation.navigation
 
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import com.github.repos.R
 
 sealed interface AppDestination {
-    val route : String
+    val route: String
     val title: Int
     val icon: Int
 }
@@ -14,14 +15,15 @@ object Summary : AppDestination {
     override val title = R.string.summary
     override val icon: Int = R.drawable.rounded_edge
 }
+
 object AllRepos : AppDestination {
     override val route: String = "all_repositories"
     override val title = R.string.all_repositories
-    override val icon: Int =  R.drawable.ic_launcher_background
+    override val icon: Int = R.drawable.ic_launcher_background
 }
 
 
-object SingleRepo : AppDestination {
+object RepoDetails : AppDestination {
     override val route = "single_repository"
     override val icon = R.drawable.ic_launcher_background
     override val title = R.string.repository_detail
@@ -36,6 +38,6 @@ object SingleRepo : AppDestination {
     )
 }
 
-val allDestinations = listOf(Summary, AllRepos, SingleRepo)
+val allDestinations = listOf(Summary, AllRepos, RepoDetails)
 
 val bottomNavDestinations = listOf(Summary, AllRepos)

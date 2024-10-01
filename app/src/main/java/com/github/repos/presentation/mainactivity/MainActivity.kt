@@ -1,13 +1,12 @@
-package com.github.repos
+package com.github.repos.presentation.mainactivity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Box
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -17,11 +16,16 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.github.repos.presentation.components.AppTopBar
 import com.github.repos.presentation.components.BottomNavigationBar
-import com.github.repos.presentation.components.NavigationDrawer
+import com.github.repos.presentation.navigation.AppNavHost
+import com.github.repos.presentation.navigation.Summary
+import com.github.repos.presentation.navigation.allDestinations
+import com.github.repos.presentation.navigation.bottomNavDestinations
+import com.github.repos.presentation.navigation.navigateAndClearBackStack
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    private val mainViewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -34,10 +38,8 @@ class MainActivity : ComponentActivity() {
 fun StartScreen(
     navController: NavHostController = rememberNavController()
 ) {
-    // Get current back stack entry
     val currentBackStack by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStack?.destination
-    // Get the name of the current screen
     val currentScreen = remember(currentDestination) {
         allDestinations.find { it.route == currentDestination?.route } ?: Summary
     }
@@ -54,11 +56,12 @@ fun StartScreen(
             if (currentScreen in bottomNavDestinations) {
                 BottomNavigationBar(
                     allScreens = bottomNavDestinations,
-                    onTabSelected ={ newScreen ->
-                    navController.navigateAndClearBackStack(newScreen.route)
+                    onTabSelected = { newScreen ->
+                        navController.navigateAndClearBackStack(newScreen.route)
                     },
                     currentScreen = currentScreen,
-                    navController)
+                    navController
+                )
             }
         }
     ) { innerPadding ->

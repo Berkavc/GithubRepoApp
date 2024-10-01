@@ -1,11 +1,7 @@
 package com.github.repos.presentation.allrepos
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.TypedValue
-import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -42,16 +38,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
-import com.bumptech.glide.Glide
 import com.github.repos.R
 import com.github.repos.data.model.AllRepositories
 import com.github.repos.data.model.ResponseState
+import com.github.repos.presentation.components.LoadImageFromUrl
 import com.github.repos.presentation.repodetails.RepoDetailActivity
 import dagger.hilt.android.AndroidEntryPoint
+
+//TODO DELETE THIS CLASS LATER
 @AndroidEntryPoint
 class RepoListActivity : ComponentActivity() {
     private val allRepoListViewModel: AllRepositoriesViewModel by viewModels()
@@ -128,29 +124,6 @@ fun RepoScreen(viewModel: AllRepositoriesViewModel) {
             viewModel.getAllRepositories()
         }
     }
-}
-
-@Composable
-fun LoadImageFromUrl(url: String) {
-    AndroidView(factory = { context ->
-        ImageView(context).apply {
-            layoutParams = ViewGroup.LayoutParams(32.dp.toPx(context), 32.dp.toPx(context))
-            scaleType = ImageView.ScaleType.CENTER_CROP
-        }
-    }, update = { imageView ->
-        Glide.with(imageView.context)
-            .load(url)
-            .override(32.dp.toPx(imageView.context), 32.dp.toPx(imageView.context))
-            .into(imageView)
-    })
-}
-
-fun Dp.toPx(context: Context): Int {
-    return TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_DIP,
-        this.value,
-        context.resources.displayMetrics
-    ).toInt()
 }
 
 @Composable

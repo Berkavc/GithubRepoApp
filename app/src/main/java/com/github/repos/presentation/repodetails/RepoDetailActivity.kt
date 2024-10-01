@@ -1,8 +1,6 @@
 package com.github.repos.presentation.repodetails
 
 import android.os.Bundle
-import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -41,12 +39,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
-import com.bumptech.glide.Glide
 import com.github.repos.R
 import com.github.repos.data.model.ResponseState
+import com.github.repos.presentation.components.LoadImageFromUrl
 import dagger.hilt.android.AndroidEntryPoint
 
+//TODO DELETE THIS CLASS LATER
 @AndroidEntryPoint
 class RepoDetailActivity : ComponentActivity() {
     private lateinit var username: String
@@ -71,23 +69,6 @@ class RepoDetailActivity : ComponentActivity() {
             )
         }
     }
-}
-@Composable
-fun LoadImageFromUrl(url: String) {
-    AndroidView(factory = { context ->
-        ImageView(context).apply {
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-            scaleType = ImageView.ScaleType.CENTER
-        }
-    }, update = { imageView ->
-        Glide.with(imageView.context)
-            .load(url)
-            .override((imageView.height * 0.5).toInt())
-            .into(imageView)
-    })
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
