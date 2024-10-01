@@ -3,19 +3,20 @@ package com.github.repos
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.github.repos.domain.model.AllRepositories
-import com.github.repos.presentation.SummaryScreen
 import com.github.repos.presentation.components.AppTopBar
 import com.github.repos.presentation.components.BottomNavigationBar
+import com.github.repos.presentation.components.NavigationDrawer
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,8 +39,6 @@ fun StartScreen(
     // Get the name of the current screen
     val currentScreen =
         allDestinations.find { it.route == currentDestination?.route } ?: Summary
-
-
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -53,7 +52,7 @@ fun StartScreen(
             BottomNavigationBar(
                 allScreens = bottomNavDestinations,
                 onTabSelected ={ newScreen ->
-                    navController.navigateSingleTopTo(newScreen.route) /*todo*/
+                    navController.navigateAndClearBackStack(newScreen.route)
                 },
                 currentScreen = currentScreen,
                 navController)
@@ -63,17 +62,5 @@ fun StartScreen(
             navController = navController,
             modifier = Modifier.padding(innerPadding)
         )
-//        NavHost(
-//            navController = navController,
-//            startDestination = Summary.route,
-//            modifier = Modifier.padding(innerPadding)
-//        ) {
-//            composable(route = Summary.route) {
-//                SummaryScreen(navController)
-//            }
-//            composable(route = AllRepositories.route) {
-//                AllRepositoriesScreen(navController)
-//            }
-//        }
     }
 }

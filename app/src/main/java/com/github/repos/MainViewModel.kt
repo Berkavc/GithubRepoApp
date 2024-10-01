@@ -25,4 +25,6 @@ class MainViewModel @Inject constructor(val mainUseCase: MainUseCase) : ViewMode
             _allRepositories.postValue(it)
         }
     }
+
+
 }
