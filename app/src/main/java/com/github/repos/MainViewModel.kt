@@ -19,12 +19,9 @@ class MainViewModel @Inject constructor(val mainUseCase: MainUseCase) : ViewMode
     val allRepositories: LiveData<ResponseState<List<AllRepositories>>>
         get() = _allRepositories
 
-
     fun getAllRepositories() = viewModelScope.launch(Dispatchers.IO) {
         mainUseCase().collect {
             _allRepositories.postValue(it)
         }
     }
-
-
 }
