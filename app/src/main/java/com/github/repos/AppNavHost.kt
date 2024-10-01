@@ -1,14 +1,22 @@
 package com.github.repos
 
 import AllRepositoriesScreen
+import android.net.Uri
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import com.github.repos.SingleRepo.arguments
 import com.github.repos.SingleRepo.avatarUrlArg
@@ -20,12 +28,12 @@ import com.github.repos.presentation.SummaryScreen
 @Composable
 fun AppNavHost(
     navController: NavHostController,
-    startDestination: String = Summary.route,
+    startDestination: String,
     modifier: Modifier = Modifier
 ) {
     NavHost(
         navController = navController,
-        startDestination =  startDestination,
+        startDestination =  Summary.route,
         modifier = modifier
     ) {
         composable(route = Summary.route) {
@@ -36,9 +44,12 @@ fun AppNavHost(
         }
         composable(
             route = SingleRepo.routeWithArgs,
-            arguments = arguments,
+            arguments = SingleRepo.arguments,
 //            deepLinks = SingleRepo.deepLinks
         ) { navBackStackEntry ->
+            arguments.forEach {
+                navBackStackEntry.arguments?.getString(it.name)
+            }
             val repoName =
                 navBackStackEntry.arguments?.getString(repoNameArg)
             val userName =
@@ -56,7 +67,6 @@ fun AppNavHost(
 
 fun NavHostController.navigateWithStackControl(route: String) =
     this.navigate(route) {
-        println("navigateWithStackControl===${route}")
         // Pop up to the start destination of the graph to
         // avoid building up a large stack of destinations
         // on the back stack as users select items
@@ -83,7 +93,6 @@ fun NavHostController.navigateAndClearBackStack(route: String) =
     }
 
 fun NavHostController.navigateDetails(userName: String, repoName: String, avatarUrl: String) {
-    println("navigateDetails===${SingleRepo.route}/${userName}/${repoName}/${avatarUrl}")
-    this.navigateWithStackControl("${SingleRepo.route}/${userName}/${repoName}/${avatarUrl}")
+    val encodedAvatarUrl = Uri.encode(avatarUrl)
+    this.navigateWithStackControl("${SingleRepo.route}/${userName}/${repoName}/${encodedAvatarUrl}")
 }
-//    this.navigateWithStackControl("${SingleRepo.route}/${userName}/${repoName}/${avatarUrl}")

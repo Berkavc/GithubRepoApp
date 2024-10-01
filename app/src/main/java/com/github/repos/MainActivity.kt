@@ -10,6 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -37,8 +38,9 @@ fun StartScreen(
     val currentBackStack by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStack?.destination
     // Get the name of the current screen
-    val currentScreen =
+    val currentScreen = remember(currentDestination) {
         allDestinations.find { it.route == currentDestination?.route } ?: Summary
+    }
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -49,17 +51,20 @@ fun StartScreen(
             )
         },
         bottomBar = {
-            BottomNavigationBar(
-                allScreens = bottomNavDestinations,
-                onTabSelected ={ newScreen ->
+            if (currentScreen in bottomNavDestinations) {
+                BottomNavigationBar(
+                    allScreens = bottomNavDestinations,
+                    onTabSelected ={ newScreen ->
                     navController.navigateAndClearBackStack(newScreen.route)
-                },
-                currentScreen = currentScreen,
-                navController)
+                    },
+                    currentScreen = currentScreen,
+                    navController)
+            }
         }
     ) { innerPadding ->
         AppNavHost(
             navController = navController,
+            startDestination = currentScreen.route,
             modifier = Modifier.padding(innerPadding)
         )
     }

@@ -38,12 +38,12 @@ object SingleRepo : AppDestination {
         navArgument(repoNameArg) { type = NavType.StringType },
         navArgument(avatarUrlArg) { type = NavType.StringType }
     )
-    val deepLinks = listOf(
-        navDeepLink { uriPattern = "android-app://androidx.navigation/$route/{$userNameArg}/{$repoNameArg}/{$avatarUrlArg}" }
-    )
+//    val deepLinks = listOf(
+//        navDeepLink { uriPattern = "android-app://androidx.navigation/$route/{$userNameArg}/{$repoNameArg}/{$avatarUrlArg}" }
+//    )
 }
 
-val allDestinations = listOf(Summary, AllRepos)
+val allDestinations = listOf(Summary, AllRepos, SingleRepo)
 
 val bottomNavDestinations = listOf(Summary, AllRepos)
 
