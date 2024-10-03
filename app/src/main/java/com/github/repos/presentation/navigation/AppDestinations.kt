@@ -5,7 +5,7 @@ import androidx.navigation.navArgument
 import com.github.repos.R
 
 sealed interface AppDestination {
-    val route : String
+    val route: String
     val title: Int
     val icon: Int
 }
@@ -69,29 +69,21 @@ object AllRepos : AppDestination {
 }
 
 
-object SingleRepo : AppDestination {
+object RepoDetails : AppDestination {
     override val route = "single_repository"
     override val icon = R.drawable.ic_launcher_background
     override val title = R.string.repository_detail
     const val userNameArg = "user_name"
     const val repoNameArg = "repo_name"
     const val avatarUrlArg = "avatar_url"
-    // Define the dynamic route with placeholders
     val routeWithArgs = "$route/{$userNameArg}/{$repoNameArg}/{$avatarUrlArg}"
-
-    // Define arguments to be passed via the route
     val arguments = listOf(
         navArgument(userNameArg) { type = NavType.StringType },
         navArgument(repoNameArg) { type = NavType.StringType },
         navArgument(avatarUrlArg) { type = NavType.StringType }
     )
-//    val deepLinks = listOf(
-//        navDeepLink { uriPattern = "android-app://androidx.navigation/$route/{$userNameArg}/{$repoNameArg}/{$avatarUrlArg}" }
-//    )
 }
 
-val allDestinations = listOf(Summary, AllRepos, SingleRepo)
+val allDestinations = listOf(Summary, AllRepos, RepoDetails)
 
 val bottomNavDestinations = listOf(Summary, AllRepos)
-
-//todo drawer

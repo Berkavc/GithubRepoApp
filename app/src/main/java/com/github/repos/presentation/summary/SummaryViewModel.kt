@@ -1,8 +1,8 @@
-package com.github.repos.presentation.mainactivity
+package com.github.repos.presentation.summary
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor() : ViewModel() {}
+class SummaryViewModel @Inject constructor() : ViewModel() {}

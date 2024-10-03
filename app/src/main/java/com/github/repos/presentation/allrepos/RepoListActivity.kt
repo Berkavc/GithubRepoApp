@@ -1,14 +1,11 @@
 package com.github.repos.presentation.allrepos
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -33,13 +30,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -50,12 +43,11 @@ import androidx.compose.ui.unit.sp
 import com.github.repos.R
 import com.github.repos.data.model.AllRepositories
 import com.github.repos.data.model.ResponseState
+import com.github.repos.presentation.components.LoadImageFromUrl
 import com.github.repos.presentation.repodetails.RepoDetailActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import java.net.URL
 
+//TODO DELETE THIS CLASS LATER
 @AndroidEntryPoint
 class RepoListActivity : ComponentActivity() {
     private val allRepoListViewModel: AllRepositoriesViewModel by viewModels()
@@ -130,36 +122,6 @@ fun RepoScreen(viewModel: AllRepositoriesViewModel) {
 
         LaunchedEffect(Unit) {
             viewModel.getAllRepositories()
-        }
-    }
-}
-
-
-@Composable
-fun LoadImageFromUrl(url: String) {
-    var bitmap by remember { mutableStateOf<Bitmap?>(null) }
-
-    LaunchedEffect(url) {
-        bitmap = loadImage(url)
-    }
-
-    bitmap?.let {
-        Image(
-            bitmap = it.asImageBitmap(), contentDescription = "Avatar",
-            modifier = Modifier
-                .width(32.dp)
-                .height(32.dp)
-        )
-    }
-}
-
-suspend fun loadImage(url: String): Bitmap? {
-    return withContext(Dispatchers.IO) {
-        try {
-            val inputStream = URL(url).openStream()
-            BitmapFactory.decodeStream(inputStream)
-        } catch (e: Exception) {
-            null
         }
     }
 }

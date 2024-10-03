@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -30,13 +29,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.github.repos.R
+import com.github.repos.data.model.ResponseState
 import com.github.repos.presentation.navigation.Summary
 import com.github.repos.presentation.navigation.allDestinations
-import com.github.repos.data.model.ResponseState
 import com.github.repos.presentation.components.AppTopBar
 import com.github.repos.presentation.components.LoadImageFromUrl
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RepositoryDetailsScreen(
     navController: NavHostController = rememberNavController(),
@@ -62,29 +60,6 @@ fun RepositoryDetailsScreen(
             canNavigateBack = navController.previousBackStackEntry != null,
             navigateUp = { navController.navigateUp() }
         )
-//        TopAppBar(
-//            colors = TopAppBarDefaults.topAppBarColors(
-//                containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
-//                titleContentColor = Color.White,
-//            ),
-//            title = {
-//                Text(
-//                    stringResource(id = R.string.repository_detail),
-//                    maxLines = 1,
-//                    textAlign = TextAlign.Start,
-//                    color = Color.White,
-//                    fontSize = 20.sp,
-//                    overflow = TextOverflow.Ellipsis,
-//                    fontWeight = FontWeight.Bold,
-//                )
-//            },
-//            navigationIcon = {
-//                IconButton(onClick = { onBackPressed() }) {
-//                    Icon(Icons.Filled.ArrowBack, contentDescription = "Geri", tint = Color.White)
-//                }
-//            }
-//        )
-
         when (val state = repositoryDetails) {
             is ResponseState.Loading -> {
                 CircularProgressIndicator(
@@ -187,7 +162,6 @@ fun RepositoryDetailsScreen(
                     Toast.LENGTH_SHORT
                 ).show()
             }
-
             else -> {}
         }
     }

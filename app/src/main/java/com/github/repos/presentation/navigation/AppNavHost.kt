@@ -22,13 +22,13 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.github.repos.presentation.navigation.RepoDetails.arguments
+import com.github.repos.presentation.navigation.RepoDetails.avatarUrlArg
+import com.github.repos.presentation.navigation.RepoDetails.repoNameArg
+import com.github.repos.presentation.navigation.RepoDetails.userNameArg
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.github.repos.presentation.navigation.SingleRepo.arguments
-import com.github.repos.presentation.navigation.SingleRepo.avatarUrlArg
-import com.github.repos.presentation.navigation.SingleRepo.repoNameArg
-import com.github.repos.presentation.navigation.SingleRepo.userNameArg
 import com.github.repos.presentation.auth.ForgotPasswordScreen
 import com.github.repos.presentation.auth.LoginScreen
 import com.github.repos.presentation.auth.RegisterScreen
@@ -192,8 +192,8 @@ fun NavGraphBuilder.OtherNav(
         }
 
         composable(
-            route = SingleRepo.routeWithArgs,
-            arguments = SingleRepo.arguments,
+            route = RepoDetails.routeWithArgs,
+            arguments = RepoDetails.arguments,
 //            deepLinks = SingleRepo.deepLinks
         ) { navBackStackEntry ->
             arguments.forEach {
@@ -232,9 +232,8 @@ fun AppNavHost(
             AllRepositoriesScreen(navController)
         }
         composable(
-            route = SingleRepo.routeWithArgs,
-            arguments = SingleRepo.arguments,
-//            deepLinks = SingleRepo.deepLinks
+            route = RepoDetails.routeWithArgs,
+            arguments = RepoDetails.arguments
         ) { navBackStackEntry ->
             arguments.forEach {
                 navBackStackEntry.arguments?.getString(it.name)
@@ -245,11 +244,7 @@ fun AppNavHost(
                 navBackStackEntry.arguments?.getString(userNameArg)
             val avatarUrl =
                 navBackStackEntry.arguments?.getString(avatarUrlArg)
-            if (repoName != null && userName != null && avatarUrl != null) {
-                RepositoryDetailsScreen(navController, userName, repoName, avatarUrl)
-            } else {
-                Text("Error: Missing required arguments")
-            }
+            RepositoryDetailsScreen(navController, userName ?: "", repoName ?: "", avatarUrl ?: "")
         }
     }
 }
@@ -326,7 +321,7 @@ fun NavHostController.navigateAndClearBackStack(route: String) =
 
 fun NavHostController.navigateDetails(userName: String, repoName: String, avatarUrl: String) {
     val encodedAvatarUrl = Uri.encode(avatarUrl)
-    this.navigateWithStackControl("${SingleRepo.route}/${userName}/${repoName}/${encodedAvatarUrl}")
+    this.navigateWithStackControl("${RepoDetails.route}/${userName}/${repoName}/${encodedAvatarUrl}")
 }
 
 @Composable
