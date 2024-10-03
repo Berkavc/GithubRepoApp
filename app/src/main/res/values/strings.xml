@@ -13,4 +13,12 @@
     <string name="summary">Summary</string>
     <string name="all_repositories">All Repositories</string>
     <string name="repository_details">Repository Details</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="forgot_password">Forgot My Password</string>
+    <string name="welcome">Welcome!</string>
+    <string name="auth_graph">Authentication Graph</string>
+    <string name="home_graph">Home Graph</string>
+    <string name="other_graph">Other Graph</string>
+
 </resources>

@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,11 +36,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.github.repos.MainViewModel
 import com.github.repos.R
+import com.github.repos.Summary
+import com.github.repos.allDestinations
 import com.github.repos.domain.model.RepositoryDetails
 import com.github.repos.domain.model.ResponseState
+import com.github.repos.presentation.components.AppTopBar
 import com.github.repos.presentation.components.LoadImageFromUrl
 import com.github.repos.presentation.repodetails.RepositoryDetailsViewModel
 
@@ -56,7 +61,19 @@ fun RepositoryDetailsScreen(
     LaunchedEffect(Unit) {
         viewModel.getRepositoryDetails(userName, repoName)
     }
+    // Get current back stack entry
+    val currentBackStack by navController.currentBackStackEntryAsState()
+    val currentDestination = currentBackStack?.destination
+    // Get the name of the current screen
+    val currentScreen = remember(currentDestination) {
+        allDestinations.find { it.route == currentDestination?.route } ?: Summary
+    }
     Column(modifier = Modifier.fillMaxWidth()) {
+        AppTopBar(
+            currentScreen = currentScreen,
+            canNavigateBack = navController.previousBackStackEntry != null,
+            navigateUp = { navController.navigateUp() }
+        )
 //        TopAppBar(
 //            colors = TopAppBarDefaults.topAppBarColors(
 //                containerColor = MaterialTheme.colorScheme.onPrimaryContainer,

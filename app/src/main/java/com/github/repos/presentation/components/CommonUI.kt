@@ -126,14 +126,18 @@ fun BottomNavigationBar(
 
 @Composable
 fun NavigationDrawer(
-    drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Open),
-    content: @Composable () -> Unit
+    drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
+    drawerContent: @Composable () -> Unit,
+    content: @Composable () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            ModalDrawerSheet { /* Drawer content */ }
+            ModalDrawerSheet {
+            /* Drawer content */
+                drawerContent()
+            }
         },
     ) {
         Scaffold(

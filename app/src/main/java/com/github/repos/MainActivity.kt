@@ -25,47 +25,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            StartScreen()
+            RootNav()
         }
-    }
-}
-
-@Composable
-fun StartScreen(
-    navController: NavHostController = rememberNavController()
-) {
-    // Get current back stack entry
-    val currentBackStack by navController.currentBackStackEntryAsState()
-    val currentDestination = currentBackStack?.destination
-    // Get the name of the current screen
-    val currentScreen = remember(currentDestination) {
-        allDestinations.find { it.route == currentDestination?.route } ?: Summary
-    }
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        topBar = {
-            AppTopBar(
-                currentScreen = currentScreen,
-                canNavigateBack = navController.previousBackStackEntry != null,
-                navigateUp = { navController.navigateUp() }
-            )
-        },
-        bottomBar = {
-            if (currentScreen in bottomNavDestinations) {
-                BottomNavigationBar(
-                    allScreens = bottomNavDestinations,
-                    onTabSelected ={ newScreen ->
-                    navController.navigateAndClearBackStack(newScreen.route)
-                    },
-                    currentScreen = currentScreen,
-                    navController)
-            }
-        }
-    ) { innerPadding ->
-        AppNavHost(
-            navController = navController,
-            startDestination = currentScreen.route,
-            modifier = Modifier.padding(innerPadding)
-        )
     }
 }

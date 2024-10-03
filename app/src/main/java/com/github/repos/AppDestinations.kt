@@ -10,6 +10,53 @@ sealed interface AppDestination {
     val icon: Int
 }
 
+object Welcome : AppDestination {
+    override val route: String = "welcome"
+    override val title = R.string.welcome
+    override val icon: Int = R.drawable.rounded_edge
+}
+
+object Login : AppDestination {
+    override val route: String = "login"
+    override val title = R.string.login
+    override val icon: Int = R.drawable.rounded_edge
+}
+
+object Register : AppDestination {
+    override val route: String = "register"
+    override val title = R.string.register
+    override val icon: Int = R.drawable.rounded_edge
+}
+
+object ForgotPassword : AppDestination {
+    override val route: String = "forgot_password"
+    override val title = R.string.forgot_password
+    override val icon: Int = R.drawable.rounded_edge
+}
+
+object AuthNav : AppDestination {
+    override val route: String = "auth"
+    override val title = R.string.auth_graph
+    override val icon: Int = R.drawable.rounded_edge
+}
+
+object HomeNav : AppDestination {
+    override val route: String = "home"
+    override val title = R.string.home_graph
+    override val icon: Int = R.drawable.rounded_edge
+}
+
+object OtherNav : AppDestination {
+    override val route: String = "other"
+    override val title = R.string.other_graph
+    override val icon: Int = R.drawable.rounded_edge
+}
+
+object Empty : AppDestination {
+    override val route: String = "empty"
+    override val title = R.string.other_graph
+    override val icon: Int = R.drawable.rounded_edge
+}
 object Summary : AppDestination {
     override val route: String = "summary"
     override val title = R.string.summary

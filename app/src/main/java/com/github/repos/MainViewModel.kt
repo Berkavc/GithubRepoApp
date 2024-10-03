@@ -16,6 +16,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(val mainUseCase: MainUseCase) : ViewModel() {
 
     private val _allRepositories = MutableLiveData<ResponseState<List<AllRepositories>>>()
+
     val allRepositories: LiveData<ResponseState<List<AllRepositories>>>
         get() = _allRepositories
 

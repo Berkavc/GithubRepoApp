@@ -14,4 +14,13 @@
     <string name="summary">Summary</string>
     <string name="all_repositories">All Repositories</string>
     <string name="repository_details">Repository Details</string>
+    <string name="login">Üye Girişi</string>
+    <string name="register">Kayıt Ol</string>
+    <string name="forgot_password">Şifremi Unuttum</string>
+    <string name="welcome">Welcome!</string>
+    <string name="auth_graph">Yetki Denetimi Graf</string>
+    <string name="home_graph">Ana Graf</string>
+    <string name="other_graph">Diger Graf</string>
+
+
 </resources>
