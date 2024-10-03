@@ -1,8 +1,8 @@
-package com.github.repos
+package com.github.repos.presentation.navigation
 
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
-import androidx.navigation.navDeepLink
+import com.github.repos.R
 
 sealed interface AppDestination {
     val route : String
@@ -65,7 +65,7 @@ object Summary : AppDestination {
 object AllRepos : AppDestination {
     override val route: String = "all_repositories"
     override val title = R.string.all_repositories
-    override val icon: Int =  R.drawable.ic_launcher_background
+    override val icon: Int = R.drawable.ic_launcher_background
 }
 
 

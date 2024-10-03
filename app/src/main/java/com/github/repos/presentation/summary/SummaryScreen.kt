@@ -1,8 +1,8 @@
-package com.github.repos.presentation
+package com.github.repos.presentation.summary
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import com.github.repos.MainViewModel
+import com.github.repos.presentation.mainactivity.MainViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 

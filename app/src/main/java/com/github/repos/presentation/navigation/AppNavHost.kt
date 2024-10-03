@@ -1,4 +1,4 @@
-package com.github.repos
+package com.github.repos.presentation.navigation
 
 import AllRepositoriesScreen
 import android.net.Uri
@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ComposeCompilerApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -20,23 +19,22 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.github.repos.SingleRepo.arguments
-import com.github.repos.SingleRepo.avatarUrlArg
-import com.github.repos.SingleRepo.repoNameArg
-import com.github.repos.SingleRepo.userNameArg
-import com.github.repos.presentation.ForgotPasswordScreen
-import com.github.repos.presentation.LoginScreen
-import com.github.repos.presentation.RegisterScreen
-import com.github.repos.presentation.RepositoryDetailsScreen
-import com.github.repos.presentation.SummaryScreen
-import com.github.repos.presentation.WelcomeScreen
+import com.github.repos.presentation.navigation.SingleRepo.arguments
+import com.github.repos.presentation.navigation.SingleRepo.avatarUrlArg
+import com.github.repos.presentation.navigation.SingleRepo.repoNameArg
+import com.github.repos.presentation.navigation.SingleRepo.userNameArg
+import com.github.repos.presentation.auth.ForgotPasswordScreen
+import com.github.repos.presentation.auth.LoginScreen
+import com.github.repos.presentation.auth.RegisterScreen
+import com.github.repos.presentation.repodetails.RepositoryDetailsScreen
+import com.github.repos.presentation.summary.SummaryScreen
+import com.github.repos.presentation.auth.WelcomeScreen
 import com.github.repos.presentation.components.AppTopBar
 import com.github.repos.presentation.components.BottomNavigationBar
 import com.github.repos.presentation.components.NavigationDrawer

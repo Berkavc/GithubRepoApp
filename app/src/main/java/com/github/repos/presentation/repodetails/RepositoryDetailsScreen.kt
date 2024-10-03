@@ -1,4 +1,4 @@
-package com.github.repos.presentation
+package com.github.repos.presentation.repodetails
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
@@ -9,16 +9,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -30,23 +23,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.github.repos.MainViewModel
 import com.github.repos.R
-import com.github.repos.Summary
-import com.github.repos.allDestinations
-import com.github.repos.domain.model.RepositoryDetails
-import com.github.repos.domain.model.ResponseState
+import com.github.repos.presentation.navigation.Summary
+import com.github.repos.presentation.navigation.allDestinations
+import com.github.repos.data.model.ResponseState
 import com.github.repos.presentation.components.AppTopBar
 import com.github.repos.presentation.components.LoadImageFromUrl
-import com.github.repos.presentation.repodetails.RepositoryDetailsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

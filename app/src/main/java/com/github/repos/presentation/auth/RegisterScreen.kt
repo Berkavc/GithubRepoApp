@@ -1,4 +1,4 @@
-package com.github.repos.presentation
+package com.github.repos.presentation.auth
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,13 +21,12 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.github.repos.ForgotPassword
-import com.github.repos.Login
-import com.github.repos.MainViewModel
-import com.github.repos.Welcome
+import com.github.repos.presentation.navigation.ForgotPassword
+import com.github.repos.presentation.navigation.Login
+import com.github.repos.presentation.mainactivity.MainViewModel
 
 @Composable
-fun ForgotPasswordScreen(
+fun RegisterScreen(
     navController: NavHostController = rememberNavController(),
     viewModel: MainViewModel = hiltViewModel()
 ) {

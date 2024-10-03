@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.github.repos.domain.model.RepositoryDetails
+import com.github.repos.data.model.RepositoryDetails
 import com.github.repos.domain.usecase.GetRepositoryDetailsUseCase
-import com.github.repos.domain.model.ResponseState
+import com.github.repos.data.model.ResponseState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
