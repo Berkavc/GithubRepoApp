@@ -29,12 +29,12 @@ import com.github.repos.presentation.navigation.RepoDetails.userNameArg
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.github.repos.presentation.auth.ForgotPasswordScreen
-import com.github.repos.presentation.auth.LoginScreen
-import com.github.repos.presentation.auth.RegisterScreen
+import com.github.repos.presentation.auth.forgotpassword.ForgotPasswordScreen
+import com.github.repos.presentation.auth.login.LoginScreen
+import com.github.repos.presentation.auth.register.RegisterScreen
 import com.github.repos.presentation.repodetails.RepositoryDetailsScreen
 import com.github.repos.presentation.summary.SummaryScreen
-import com.github.repos.presentation.auth.WelcomeScreen
+import com.github.repos.presentation.auth.welcome.WelcomeScreen
 import com.github.repos.presentation.components.AppTopBar
 import com.github.repos.presentation.components.BottomNavigationBar
 import com.github.repos.presentation.components.NavigationDrawer
@@ -47,17 +47,12 @@ fun RootNav(
         navController = navController,
         startDestination = AuthNav.route
     ) {
-        AuthNav(navController)
-
-        DashboardNav(navController)
-
-//        composable(route = HomeNav.route) {
-//            DashboardScreens()
-//        }
+        authNav(navController)
+        dashboardNav(navController)
     }
 }
 
-fun NavGraphBuilder.AuthNav(
+fun NavGraphBuilder.authNav(
     navController: NavHostController
 ) {
     navigation(
@@ -87,10 +82,8 @@ fun DashboardScreens(
     navController: NavHostController = rememberNavController(),
     content: @Composable () -> Unit,
 ) {
-    // Get current back stack entry
     val currentBackStack by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStack?.destination
-    // Get the name of the current screen
     val currentScreen = remember(currentDestination) {
         allDestinations.find { it.route == currentDestination?.route } ?: Summary
     }
@@ -136,7 +129,7 @@ fun DashboardScreens(
     }
 }
 
-fun NavGraphBuilder.DashboardNav(
+fun NavGraphBuilder.dashboardNav(
     navController: NavHostController
 ) {
     navigation(
@@ -155,33 +148,11 @@ fun NavGraphBuilder.DashboardNav(
                 AllRepositoriesScreen(navController = navController)
             }
         }
-
-        OtherNav(navController = navController)
+        otherNav(navController = navController)
     }
 }
 
-@Composable
-fun DashboardNav(
-    navController: NavHostController
-) {
-    NavHost(
-        navController = navController,
-        route = HomeNav.route,
-        startDestination = Summary.route
-    ) {
-        composable(route = Summary.route) {
-            SummaryScreen(navController = navController)
-        }
-
-        composable(route = AllRepos.route) {
-            AllRepositoriesScreen(navController = navController)
-        }
-
-        OtherNav(navController = navController)
-    }
-}
-
-fun NavGraphBuilder.OtherNav(
+fun NavGraphBuilder.otherNav(
     navController: NavHostController
 ) {
     navigation(
@@ -190,7 +161,6 @@ fun NavGraphBuilder.OtherNav(
     ) {
         composable(route = Empty.route) {
         }
-
         composable(
             route = RepoDetails.routeWithArgs,
             arguments = RepoDetails.arguments,
@@ -205,11 +175,7 @@ fun NavGraphBuilder.OtherNav(
                 navBackStackEntry.arguments?.getString(userNameArg)
             val avatarUrl =
                 navBackStackEntry.arguments?.getString(avatarUrlArg)
-            if (repoName != null && userName != null && avatarUrl != null) {
-                RepositoryDetailsScreen(navController, userName, repoName, avatarUrl)
-            } else {
-                Text("Error: Missing required arguments")
-            }
+            RepositoryDetailsScreen(navController, userName ?: "", repoName ?: "", avatarUrl ?: "")
         }
     }
 }
@@ -293,29 +259,20 @@ fun StartScreen(
 
 fun NavHostController.navigateWithStackControl(route: String) =
     this.navigate(route) {
-        // Pop up to the start destination of the graph to
-        // avoid building up a large stack of destinations
-        // on the back stack as users select items
         popUpTo(
             this@navigateWithStackControl.graph.findStartDestination().id
         ) {
             saveState = true
         }
-        // Avoid multiple copies of the same destination when
-        // reselecting the same item
         launchSingleTop = true
-        // Restore state when reselecting a previously selected item
         restoreState = true
     }
 
 fun NavHostController.navigateAndClearBackStack(route: String) =
     this.navigate(route) {
-        // Pop up to the root of the backstack and clear everything
         popUpTo(0) {
-            inclusive = true // Clears the backstack entirely
+            inclusive = true
         }
-        // Avoid multiple copies of the same destination when
-        // reselecting the same item
         launchSingleTop = true
     }
 

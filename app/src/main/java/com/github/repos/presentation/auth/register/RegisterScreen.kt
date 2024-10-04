@@ -1,4 +1,4 @@
-package com.github.repos.presentation.auth
+package com.github.repos.presentation.auth.register
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,14 +21,13 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.github.repos.presentation.navigation.ForgotPassword
 import com.github.repos.presentation.navigation.Login
-import com.github.repos.presentation.mainactivity.MainViewModel
-import com.github.repos.presentation.navigation.Welcome
 
 @Composable
-fun WelcomeScreen(
+fun RegisterScreen(
     navController: NavHostController = rememberNavController(),
-    viewModel: MainViewModel = hiltViewModel()
+    viewModel: RegisterViewModel = hiltViewModel()
 ) {
     Scaffold { paddingValues ->
         Column(
@@ -39,7 +38,7 @@ fun WelcomeScreen(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = stringResource(Welcome.title),
+                text = stringResource(ForgotPassword.title),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Normal,
                 fontSize = 22.sp,
