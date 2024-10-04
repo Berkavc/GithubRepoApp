@@ -3,6 +3,7 @@ package com.github.repos.presentation.summary
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,7 +21,8 @@ import com.github.repos.R
 @Composable
 fun SummaryScreen(
     navController: NavController = rememberNavController(),
-    viewModel: SummaryViewModel = hiltViewModel()
+    viewModel: SummaryViewModel = hiltViewModel(),
+//    navigateNext: ()->Unit
 ) {
     Column {
         Text(
@@ -30,5 +32,12 @@ fun SummaryScreen(
             color = Color.DarkGray,
             modifier = Modifier.wrapContentSize(Alignment.Center)
         )
+
+
+     /*   Button(onClick = {
+            navigateNext()
+        }) {
+            Text(text = "Go to HowToScreen")
+        }*/
     }
 }

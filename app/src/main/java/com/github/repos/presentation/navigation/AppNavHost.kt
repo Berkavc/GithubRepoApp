@@ -8,6 +8,8 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.github.repos.HowToScreen
+import com.github.repos.presentation.extensions.ViewExt
 import com.github.repos.presentation.navigation.RepoDetails.arguments
 import com.github.repos.presentation.navigation.RepoDetails.avatarUrlArg
 import com.github.repos.presentation.navigation.RepoDetails.repoNameArg
@@ -28,6 +30,9 @@ fun AppNavHost(
     ) {
         composable(route = Summary.route) {
             SummaryScreen(navController)
+         /*   {
+                ViewExt.openWebView(navController, "https://developer.android.com/?hl=tr", "Android Developer")
+            }*/
         }
         composable(route = AllRepos.route) {
             AllRepositoriesScreen(navController)
@@ -46,6 +51,14 @@ fun AppNavHost(
             val avatarUrl =
                 navBackStackEntry.arguments?.getString(avatarUrlArg)
             RepositoryDetailsScreen(navController, userName ?: "", repoName ?: "", avatarUrl ?: "")
+        }
+        composable(
+            route = HowTo.routeWithArgs,
+            arguments = HowTo.arguments
+        ) { navBackStackEntry ->
+            val title = navBackStackEntry.arguments?.getString("title") ?: ""
+            val url = navBackStackEntry.arguments?.getString("url") ?: ""
+            HowToScreen(navController = navController, title = title, url = url)
         }
     }
 }
@@ -72,4 +85,9 @@ fun NavHostController.navigateAndClearBackStack(route: String) =
 fun NavHostController.navigateDetails(userName: String, repoName: String, avatarUrl: String) {
     val encodedAvatarUrl = Uri.encode(avatarUrl)
     this.navigateWithStackControl("${RepoDetails.route}/${userName}/${repoName}/${encodedAvatarUrl}")
+}
+
+fun NavHostController.navigateWebView(url: String, title: String) {
+    val encodedUrl = Uri.encode(url)
+    this.navigateWithStackControl("${HowTo.route}/${title ?: ""}/${encodedUrl ?: ""}")
 }
