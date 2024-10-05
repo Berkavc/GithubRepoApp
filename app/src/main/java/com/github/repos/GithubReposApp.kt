@@ -1,4 +1,4 @@
-package com.github.repos.presentation
+package com.github.repos
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

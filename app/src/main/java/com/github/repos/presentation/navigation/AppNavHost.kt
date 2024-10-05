@@ -22,22 +22,23 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.github.repos.presentation.navigation.RepoDetails.arguments
-import com.github.repos.presentation.navigation.RepoDetails.avatarUrlArg
-import com.github.repos.presentation.navigation.RepoDetails.repoNameArg
-import com.github.repos.presentation.navigation.RepoDetails.userNameArg
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.github.repos.presentation.howtoscreen.HowToScreen
 import com.github.repos.presentation.auth.forgotpassword.ForgotPasswordScreen
 import com.github.repos.presentation.auth.login.LoginScreen
 import com.github.repos.presentation.auth.register.RegisterScreen
-import com.github.repos.presentation.repodetails.RepositoryDetailsScreen
-import com.github.repos.presentation.summary.SummaryScreen
 import com.github.repos.presentation.auth.welcome.WelcomeScreen
 import com.github.repos.presentation.components.AppTopBar
 import com.github.repos.presentation.components.BottomNavigationBar
 import com.github.repos.presentation.components.NavigationDrawer
+import com.github.repos.presentation.navigation.RepoDetails.arguments
+import com.github.repos.presentation.navigation.RepoDetails.avatarUrlArg
+import com.github.repos.presentation.navigation.RepoDetails.repoNameArg
+import com.github.repos.presentation.navigation.RepoDetails.userNameArg
+import com.github.repos.presentation.repodetails.RepositoryDetailsScreen
+import com.github.repos.presentation.summary.SummaryScreen
 
 @Composable
 fun RootNav(
@@ -138,13 +139,13 @@ fun NavGraphBuilder.dashboardNav(
     ) {
 
         composable(route = Summary.route) {
-            DashboardScreens (navController) {
+            DashboardScreens(navController) {
                 SummaryScreen(navController = navController)
             }
         }
 
         composable(route = AllRepos.route) {
-            DashboardScreens (navController) {
+            DashboardScreens(navController) {
                 AllRepositoriesScreen(navController = navController)
             }
         }
@@ -193,6 +194,9 @@ fun AppNavHost(
     ) {
         composable(route = Summary.route) {
             SummaryScreen(navController)
+            /*   {
+                   ViewExt.openWebView(navController, "https://developer.android.com/?hl=tr", "Android Developer")
+               }*/
         }
         composable(route = AllRepos.route) {
             AllRepositoriesScreen(navController)
@@ -211,6 +215,14 @@ fun AppNavHost(
             val avatarUrl =
                 navBackStackEntry.arguments?.getString(avatarUrlArg)
             RepositoryDetailsScreen(navController, userName ?: "", repoName ?: "", avatarUrl ?: "")
+        }
+        composable(
+            route = HowTo.routeWithArgs,
+            arguments = HowTo.arguments
+        ) { navBackStackEntry ->
+            val title = navBackStackEntry.arguments?.getString("title") ?: ""
+            val url = navBackStackEntry.arguments?.getString("url") ?: ""
+            HowToScreen(navController = navController, title = title, url = url)
         }
     }
 }
@@ -281,6 +293,7 @@ fun NavHostController.navigateDetails(userName: String, repoName: String, avatar
     this.navigateWithStackControl("${RepoDetails.route}/${userName}/${repoName}/${encodedAvatarUrl}")
 }
 
+
 @Composable
 inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(navController: NavHostController): T {
     val navGraphRoute = destination.parent?.route ?: return hiltViewModel()
@@ -288,4 +301,9 @@ inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(navControll
         navController.getBackStackEntry(navGraphRoute)
     }
     return hiltViewModel(parentEntry)
+}
+
+fun NavHostController.navigateWebView(url: String, title: String) {
+    val encodedUrl = Uri.encode(url)
+    this.navigateWithStackControl("${HowTo.route}/${title ?: ""}/${encodedUrl ?: ""}")
 }

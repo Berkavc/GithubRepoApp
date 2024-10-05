@@ -2,6 +2,7 @@ package com.github.repos.presentation.summary
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,5 +27,11 @@ fun SummaryScreen(
             color = Color.DarkGray,
             modifier = Modifier.wrapContentSize(Alignment.Center)
         )
+
+     /*   Button(onClick = {
+            navigateNext()
+        }) {
+            Text(text = "Go to HowToScreen")
+        }*/
     }
 }

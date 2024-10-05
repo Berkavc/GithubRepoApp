@@ -67,6 +67,19 @@ object AllRepos : AppDestination {
     override val title = R.string.all_repositories
     override val icon: Int = R.drawable.ic_launcher_background
 }
+object HowTo : AppDestination {
+    override val route: String = "how_to"
+    override val title = R.string.app_name
+    override val icon: Int = R.drawable.ic_launcher_background
+
+    const val titleArg = "title"
+    const val urlArg = "url"
+    val routeWithArgs = "${route}/{$titleArg}/{$urlArg}"
+    val arguments = listOf(
+        navArgument("title") { type = NavType.StringType },
+        navArgument("url") { type = NavType.StringType }
+    )
+}
 
 
 object RepoDetails : AppDestination {
