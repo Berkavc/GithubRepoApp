@@ -33,6 +33,7 @@ import com.github.repos.presentation.auth.welcome.WelcomeScreen
 import com.github.repos.presentation.components.AppTopBar
 import com.github.repos.presentation.components.BottomNavigationBar
 import com.github.repos.presentation.components.NavigationDrawer
+import com.github.repos.presentation.extensions.ViewExt
 import com.github.repos.presentation.navigation.RepoDetails.arguments
 import com.github.repos.presentation.navigation.RepoDetails.avatarUrlArg
 import com.github.repos.presentation.navigation.RepoDetails.repoNameArg
@@ -86,7 +87,7 @@ fun DashboardScreens(
     val currentBackStack by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStack?.destination
     val currentScreen = remember(currentDestination) {
-        allDestinations.find { it.route == currentDestination?.route } ?: Summary
+        allDestinations.find { it.routeWithArgs == currentDestination?.route } ?: Summary
     }
     NavigationDrawer(
         drawerContent = {
@@ -140,7 +141,9 @@ fun NavGraphBuilder.dashboardNav(
 
         composable(route = Summary.route) {
             DashboardScreens(navController) {
-                SummaryScreen(navController = navController)
+                SummaryScreen(navController = navController) {
+                    ViewExt.openWebView(navController, "https://developer.android.com/?hl=tr", "Android Developer")
+                }
             }
         }
 
@@ -149,6 +152,16 @@ fun NavGraphBuilder.dashboardNav(
                 AllRepositoriesScreen(navController = navController)
             }
         }
+
+        composable(
+            route = HowTo.routeWithArgs,
+            arguments = HowTo.arguments
+        ) { navBackStackEntry ->
+            val title = navBackStackEntry.arguments?.getString("title") ?: ""
+            val url = navBackStackEntry.arguments?.getString("url") ?: ""
+            HowToScreen(navController = navController, title = title, url = url)
+        }
+
         otherNav(navController = navController)
     }
 }
@@ -193,10 +206,9 @@ fun AppNavHost(
         modifier = modifier
     ) {
         composable(route = Summary.route) {
-            SummaryScreen(navController)
-            /*   {
-                   ViewExt.openWebView(navController, "https://developer.android.com/?hl=tr", "Android Developer")
-               }*/
+            SummaryScreen(navController) {
+//                   ViewExt.openWebView(navController, "https://developer.android.com/?hl=tr", "Android Developer")
+               }
         }
         composable(route = AllRepos.route) {
             AllRepositoriesScreen(navController)
@@ -232,12 +244,10 @@ fun AppNavHost(
 fun StartScreen(
     navController: NavHostController = rememberNavController()
 ) {
-    // Get current back stack entry
     val currentBackStack by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStack?.destination
-    // Get the name of the current screen
     val currentScreen = remember(currentDestination) {
-        allDestinations.find { it.route == currentDestination?.route } ?: Summary
+        allDestinations.find { it.routeWithArgs == currentDestination?.route } ?: Summary
     }
     Scaffold(
         modifier = Modifier.fillMaxSize(),

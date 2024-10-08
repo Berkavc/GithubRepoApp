@@ -54,7 +54,6 @@ fun LoginScreen(
             Spacer(modifier = Modifier.size(100.dp))
 
             Button(onClick = {
-                //Navigate to Home Screen with Separate navhost
                 navController.navigate(HomeNav.route)
             }) {
                 Text(text = "Go To Home")

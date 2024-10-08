@@ -8,6 +8,8 @@ sealed interface AppDestination {
     val route: String
     val title: Int
     val icon: Int
+    val routeWithArgs: String
+        get() = route
 }
 
 object Welcome : AppDestination {
@@ -74,7 +76,7 @@ object HowTo : AppDestination {
 
     const val titleArg = "title"
     const val urlArg = "url"
-    val routeWithArgs = "${route}/{$titleArg}/{$urlArg}"
+    override val routeWithArgs = "${route}/{$titleArg}/{$urlArg}"
     val arguments = listOf(
         navArgument("title") { type = NavType.StringType },
         navArgument("url") { type = NavType.StringType }
@@ -89,7 +91,7 @@ object RepoDetails : AppDestination {
     const val userNameArg = "user_name"
     const val repoNameArg = "repo_name"
     const val avatarUrlArg = "avatar_url"
-    val routeWithArgs = "$route/{$userNameArg}/{$repoNameArg}/{$avatarUrlArg}"
+    override val routeWithArgs = "$route/{$userNameArg}/{$repoNameArg}/{$avatarUrlArg}"
     val arguments = listOf(
         navArgument(userNameArg) { type = NavType.StringType },
         navArgument(repoNameArg) { type = NavType.StringType },
@@ -97,6 +99,6 @@ object RepoDetails : AppDestination {
     )
 }
 
-val allDestinations = listOf(Summary, AllRepos, RepoDetails)
+val allDestinations = listOf(Summary, AllRepos, RepoDetails, HowTo)
 
 val bottomNavDestinations = listOf(Summary, AllRepos)

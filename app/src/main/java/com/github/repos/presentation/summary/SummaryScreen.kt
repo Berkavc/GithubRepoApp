@@ -1,6 +1,10 @@
 package com.github.repos.presentation.summary
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -9,17 +13,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
+import com.github.repos.presentation.extensions.ViewExt
 
 @Composable
 fun SummaryScreen(
     navController: NavController = rememberNavController(),
-    viewModel: SummaryViewModel = hiltViewModel()
+    viewModel: SummaryViewModel = hiltViewModel(),
+    navigateNext: () -> Unit
 ) {
-    Column {
+    Column (
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Text(
             text = "Summary_Screen",
             fontSize = 14.sp,
@@ -27,11 +37,10 @@ fun SummaryScreen(
             color = Color.DarkGray,
             modifier = Modifier.wrapContentSize(Alignment.Center)
         )
-
-     /*   Button(onClick = {
-            navigateNext()
-        }) {
-            Text(text = "Go to HowToScreen")
-        }*/
+        Spacer(Modifier.height(16.dp))
+        Text(text = "Go to HowToScreen",
+            modifier = Modifier.clickable {
+                navigateNext()
+            })
     }
 }

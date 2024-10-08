@@ -114,7 +114,6 @@ fun NavigationDrawer(
     ) {
         Scaffold(
         ) { contentPadding ->
-            // Screen content
             Surface(Modifier.padding(contentPadding)) {
                 content()
             }

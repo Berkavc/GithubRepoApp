@@ -47,12 +47,10 @@ fun RepositoryDetailsScreen(
     LaunchedEffect(Unit) {
         viewModel.getRepositoryDetails(userName, repoName)
     }
-    // Get current back stack entry
     val currentBackStack by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStack?.destination
-    // Get the name of the current screen
     val currentScreen = remember(currentDestination) {
-        allDestinations.find { it.route == currentDestination?.route } ?: Summary
+        allDestinations.find { it.routeWithArgs == currentDestination?.route} ?: Summary
     }
     Column(modifier = Modifier.fillMaxWidth()) {
         AppTopBar(

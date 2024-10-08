@@ -58,7 +58,6 @@ fun AllRepositoriesScreen(
                 LazyColumn(modifier = Modifier.fillMaxWidth()) {
                     items(repoList!!.size) { index ->
                         RepoItemView(repo = repoList[index]) { username, repoName, avatarUrl ->
-                            // Navigate to the repository details
                             navController.navigateDetails(username, repoName, avatarUrl)
                         }
                     }
